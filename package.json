@@ -1,0 +1,25 @@
+{
+  "name": "ts-webpack-library-starter",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {},
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "repl": "node -i -e \"$(< ./lib/ts-webpack-library-starter.min.js)\""
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "@types/node": "^10.12.3",
+    "@types/webpack": "^4.4.20",
+    "babel-loader": "^8.0.4",
+    "fork-ts-checker-webpack-plugin": "^0.5.0",
+    "html-webpack-plugin": "^3.2.0",
+    "ts-loader": "^5.3.1",
+    "tslint": "^5.7.0",
+    "tslint-config-prettier": "^1.10.0",
+    "tslint-loader": "^3.5.4",
+    "typescript": "^3.1.6",
+    "webpack": "^4.26.1",
+    "webpack-cli": "^3.1.2"
+  }
+}
