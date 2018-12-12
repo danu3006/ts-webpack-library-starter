@@ -1,1 +1,4 @@
-console.log('hello');
+export default class Cat {
+    constructor(public name: string) {
+    }
+}

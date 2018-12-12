@@ -1,6 +1,10 @@
 const path = require('path');
 const fs = require('fs');
+
 const Webpack = require('webpack');
+const ForkTSCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const DtsBundleWebpack = require('dts-bundle-webpack')
+
 const pkg = require('./package.json');
 
 const resolveApp = relativePath => {
@@ -28,6 +32,36 @@ const paths = {
 };
 
 const config = {
+    resolve: {
+        extensions: ['.js', '.ts', '.json']
+    },
+    plugins: [
+        new DtsBundleWebpack({
+            name: packageName,
+            main: './dist/index.d.ts',
+            baseDir: 'dist',
+            out: '../lib/index.d.ts',
+        }),
+        new ForkTSCheckerWebpackPlugin({
+            async: false,
+            tsconfigPath: paths.tsConfig,
+            tslintPath: paths.tsLint,
+            watch: paths.src,
+        }),
+    ],
+    performance: {
+        hints: false,
+    },
+    entry: {index: './src/index.ts'},
+    mode: mode,
+    output: {
+        path: paths.dist,
+        filename: outputFile,
+        library: packageName,
+        libraryTarget: 'umd',
+        umdNamedDefine: true,
+        globalObject: "typeof self !== 'undefined' ? self : this"
+    },
     module: {
         rules: [
             {
@@ -56,23 +90,7 @@ const config = {
                 ],
             }
         ]
-    },
-    resolve: {
-        extensions: ['.js', '.ts', '.json']
-    },
-    performance: {
-        hints: false,
-    },
-    entry: {index: './src/index.ts'},
-    mode: mode,
-    output: {
-        path: paths.dist,
-        filename: outputFile,
-        library: packageName,
-        libraryTarget: 'umd',
-        umdNamedDefine: true,
-        globalObject: "typeof self !== 'undefined' ? self : this"
-    },
+    }
 };
 
 module.exports = config;
